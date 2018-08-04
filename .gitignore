@@ -1,0 +1,10 @@
+*
+!*/
+!*.py
+!*.ipynb
+!*.md
+!LICENSE
+!.gitignore
+
+.ipynb_checkpoints
+.pytest_cache
