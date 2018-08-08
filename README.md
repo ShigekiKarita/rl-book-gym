@@ -5,7 +5,7 @@ OpenAI gym style (but not depended) environment and agent library based on http:
 ## Environments
 
 - BlackJack: Example 5.1
-- RaceTrack: Exercice 5.11
+- RaceTrack: Exercice 5.10
 
 ## Agents
 
