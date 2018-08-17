@@ -193,6 +193,8 @@ Exhibit several trajectories following the optimal policy (but turn the noise of
     def reset(self):
         self.position = self.choice_start()
         self.velocity[:] = 0
+        observation = numpy.concatenate((self.position, self.velocity))
+        return observation
 
     def seed(self, seed=None):
         """
