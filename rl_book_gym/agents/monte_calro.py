@@ -22,7 +22,7 @@ class MonteCarloControler:
         if state not in self.value_dict:
             self.value_dict[state] = dict()
             self.sum_weight_dict[state] = dict()
-        for action in actions:
+        for action in self.actions:
             if action not in self.value_dict[state]:
                 self.value_dict[state][action] = 0
                 self.sum_weight_dict[state][action] = 0
@@ -47,7 +47,7 @@ class MonteCarloControler:
             obs = tuple(obs)
             cumsum_reward = reward + self.discount * cumsum_reward
             self.update_step(prev_obs, b_act, cumsum_reward, weight)
-            if b_act != self.greedy_policy(prev_obs):
+            if b_act != self.greedy_policy(prev_obs)[0]:
                 break
             if reward == Reward.finish:
                 goal = True
@@ -56,11 +56,12 @@ class MonteCarloControler:
 
     def greedy_policy(self, state):
         self.init_if_unseen(state)
-        return max(self.value_dict[state].items(),
-                   key=lambda kv: kv[1])[0]
+        a = max(self.value_dict[state].items(),
+                key=lambda kv: kv[1])[0]
+        return a, self.value_dict[state][a]
 
     def eps_greedy_policy(self, state):
-        g_action = self.greedy_policy(state)
+        g_action, g_prob = self.greedy_policy(state)
         if numpy.random.rand() > self.eps:
             return g_action, 1 - self.eps
         f = [a for a in self.actions if a != g_action]
